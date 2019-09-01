@@ -6,6 +6,7 @@
 ![Issues](https://flat.badgen.net/packagist/ghi/bnomei/kirby3-monolog?color=e6db74)
 [![Build Status](https://flat.badgen.net/travis/bnomei/kirby3-monolog)](https://travis-ci.com/bnomei/kirby3-monolog)
 [![Coverage Status](https://flat.badgen.net/coveralls/c/github/bnomei/kirby3-monolog)](https://coveralls.io/github/bnomei/kirby3-monolog) 
+[![Maintainability](https://flat.badgen.net/codeclimate/maintainability/bnomei/kirby3-monolog)](https://codeclimate.com/github/bnomei/kirby3-monolog) 
 [![Demo](https://flat.badgen.net/badge/website/examples?color=f92672)](https://kirby3-plugins.bnomei.com/monolog) 
 [![Gitter](https://flat.badgen.net/badge/gitter/chat?color=982ab3)](https://gitter.im/bnomei-kirby-3-plugins/community) 
 [![Twitter](https://flat.badgen.net/badge/twitter/bnomei?color=66d9ef)](https://twitter.com/bnomei)
@@ -46,8 +47,3 @@ This plugin is provided "as is" with no guarantee. Use it at your own risk and a
 [MIT](https://opensource.org/licenses/MIT)
 
 It is discouraged to use this plugin in any project that promotes racism, sexism, homophobia, animal abuse, violence or any other form of hate speech.
-
-## Credits
-
-based on V2 versions of
-- https://github.com/moritzz/Kirby-Calendar
