@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Bnomei\\KirbyFormatter' => $baseDir . '/classes/KirbyFormatter.php',
     'Bnomei\\Log' => $baseDir . '/classes/Log.php',
     'Kirby\\ComposerInstaller\\CmsInstaller' => $vendorDir . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',
     'Kirby\\ComposerInstaller\\Installer' => $vendorDir . '/getkirby/composer-installer/src/ComposerInstaller/Installer.php',
@@ -50,6 +51,8 @@ return array(
     'Monolog\\Handler\\FirePHPHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/FirePHPHandler.php',
     'Monolog\\Handler\\FleepHookHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/FleepHookHandler.php',
     'Monolog\\Handler\\FlowdockHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/FlowdockHandler.php',
+    'Monolog\\Handler\\FormattableHandlerInterface' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/FormattableHandlerInterface.php',
+    'Monolog\\Handler\\FormattableHandlerTrait' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/FormattableHandlerTrait.php',
     'Monolog\\Handler\\GelfHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/GelfHandler.php',
     'Monolog\\Handler\\GroupHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/GroupHandler.php',
     'Monolog\\Handler\\HandlerInterface' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/HandlerInterface.php',
@@ -67,6 +70,8 @@ return array(
     'Monolog\\Handler\\NewRelicHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/NewRelicHandler.php',
     'Monolog\\Handler\\NullHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/NullHandler.php',
     'Monolog\\Handler\\PHPConsoleHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/PHPConsoleHandler.php',
+    'Monolog\\Handler\\ProcessableHandlerInterface' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/ProcessableHandlerInterface.php',
+    'Monolog\\Handler\\ProcessableHandlerTrait' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/ProcessableHandlerTrait.php',
     'Monolog\\Handler\\PsrHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/PsrHandler.php',
     'Monolog\\Handler\\PushoverHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/PushoverHandler.php',
     'Monolog\\Handler\\RavenHandler' => $vendorDir . '/monolog/monolog/src/Monolog/Handler/RavenHandler.php',
