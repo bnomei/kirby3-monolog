@@ -112,7 +112,7 @@ monolog()->info('Incrementing Field', [
 
 ## Default Channel
 
-The [default channel](https://github.com/bnomei/kirby3-monolog/blob/master/index.php#L11) provided by this plugin [writes file](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php) to the `site/logs` folder using the filename format `date('Y-m-d') . '.log'` and [normalizes the data](hhttps://github.com/bnomei/kirby3-monolog/blob/master/classes/KirbyFormatter.php) to make logging Kirby Objects easier.
+The [default channel](https://github.com/bnomei/kirby3-monolog/blob/master/index.php#L11) provided by this plugin [writes file](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php) to the `site/storage/logs` folder using the filename format `date('Y-m-d') . '.log'` and [normalizes the data](hhttps://github.com/bnomei/kirby3-monolog/blob/master/classes/KirbyFormatter.php) to make logging Kirby Objects easier.
 
 > HINT: Without normalization you would have to call `->value()` or cast as `string` on every Kirby Field before adding its value as context data.
 
