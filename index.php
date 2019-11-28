@@ -10,7 +10,7 @@ Kirby::plugin('bnomei/monolog', [
         ],
         'default' => function () {
             $stream = new \Monolog\Handler\StreamHandler(
-                kirby()->roots()->storage() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log',
+                kirby()->roots()->site() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log',
                 \Monolog\Logger::DEBUG,
                 true,
                 null,
