@@ -103,7 +103,7 @@ monolog('security')->info('Adding a new user', [
 ]);
 
 // increment Field `visits` in current Page
-$page->increment('visits');
+$page = $page->increment('visits');
 monolog()->info('Incrementing Field', [
     'page' => $page->id(),
     'visits' => $page->visits()->toInt(),
