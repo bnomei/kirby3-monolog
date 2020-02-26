@@ -8,9 +8,32 @@ Kirby::plugin('bnomei/monolog', [
             // 'default => function() { return null; }, // disable default
             // 'example' => function() { return new \Monolog\Logger('example'); },
         ],
+        'file' => function() {
+            $dirs = [
+                // https://github.com/getkirby/ideas/issues/493
+                // zero-downtime deployments, try any of these
+                realpath(kirby()->roots()->accounts() . '/../') . DIRECTORY_SEPARATOR . 'logs',
+                realpath(kirby()->roots()->cache() . '/../') . DIRECTORY_SEPARATOR . 'logs',
+                realpath(kirby()->roots()->sessions() . '/../') . DIRECTORY_SEPARATOR . 'logs',
+                // kirby default
+                kirby()->roots()->site() . DIRECTORY_SEPARATOR . 'logs',
+            ];
+            $dir = $dirs[0];
+            foreach ($dirs as $existsDir) {
+                if (is_dir($existsDir)) {
+                    $dir = $existsDir;
+                }
+            }
+
+            return $dir . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log';
+        },
         'default' => function () {
+            $file = option('bnomei.monolog.file');
+            if ($file && is_callable($file)) {
+                $file = $file();
+            }
             $stream = new \Monolog\Handler\StreamHandler(
-                kirby()->roots()->site() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log',
+                $file,
                 \Monolog\Logger::DEBUG,
                 true,
                 null,

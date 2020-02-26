@@ -58,26 +58,16 @@ Use the [default channel](https://github.com/bnomei/kirby3-monolog/blob/master/i
 - append URI, post method and IP
 - ... create your own
 
-**site/config/config.php**
-```php
-return [
-    // other config settings ...
-    'bnomei.monolog.channels' => [
-        'security' => function() {
-            $logger = new \Monolog\Logger('security');
-            // add handlers, formatters, processors and then...
-            return $logger; 
-        }
-    ],
-];
-``` 
-
 ## Usecase
 
 ### Named Channel => Logger
 
 ```php
+// write to channel 'default' which writes to file 
+// defined at 'bnomei.monolog.file' callback 
 $log = \Bnomei\Log::singleton()->channel('default');
+// is same as
+$log = monolog('default');
 // or simply
 $log = monolog();
 
@@ -98,7 +88,7 @@ monolog()->error('Bar');
 
 #### Message and Context
 ```php
-monolog('security')->info('Adding a new user', [
+monolog()->info('Adding a new user', [
     'username' => $user->name(),
 ]);
 
@@ -112,9 +102,34 @@ monolog()->info('Incrementing Field', [
 
 ## Default Channel
 
-The [default channel](https://github.com/bnomei/kirby3-monolog/blob/master/index.php#L11) provided by this plugin [writes file](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php) to the `site/logs` folder using the filename format `date('Y-m-d') . '.log'` and [normalizes the data](hhttps://github.com/bnomei/kirby3-monolog/blob/master/classes/KirbyFormatter.php) to make logging Kirby Objects easier.
+The [default channel](https://github.com/bnomei/kirby3-monolog/blob/master/index.php#L11) provided by this plugin [writes file](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Handler/StreamHandler.php) to the `site/logs` folder. It will be using the filename format `date('Y-m-d') . '.log'` and [normalizes the data](https://github.com/bnomei/kirby3-monolog/blob/master/classes/KirbyFormatter.php) to make logging Kirby Objects easier.
 
-> HINT: Without normalization you would have to call `->value()` or cast as `string` on every Kirby Field before adding its value as context data.
+> HINT: Without that normalization you would have to call `->value()` or cast as `string` on every Kirby Field before adding its value as context data.
+
+> HINT: The default channel logs will be generated at same folder level as your accounts, cache or sessions. This way server setups for zero-downtime deployments are supported out of the box.
+
+## Custom Channel
+
+**site/config/config.php**
+```php
+return [
+    // other config settings ...
+    // (optional) add custom channels
+    'bnomei.monolog.channels' => [
+        'security' => function() {
+            $logger = new \Monolog\Logger('security');
+            // add handlers, formatters, processors and then...
+            return $logger; 
+        }
+    ],
+];
+```
+
+```php
+monolog('security')->info('User requested password reset', [
+    'User' => kirby()->user()->name(),
+]);
+```
 
 ## Dependencies
 
