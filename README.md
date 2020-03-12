@@ -121,6 +121,19 @@ return [
 ];
 ```
 
+## Custom Channel Extends
+
+**site/config/config.php**
+```php
+return [
+    // other config settings ...
+    // (optional) add custom channels from other plugins
+    'bnomei.monolog.channels.extends' => [
+        'myplugin.name.channels', // array of channel definitions in your other option
+    ],
+];
+```
+
 ```php
 monolog('security')->info('User requested password reset', [
     'User' => kirby()->user()->name(),

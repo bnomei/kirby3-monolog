@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Bnomei;
 
 use Kirby\Toolkit\A;
+use Monolog\Logger;
 
 final class Log
 {
@@ -26,8 +27,14 @@ final class Log
             'channels' => array_merge([
                 'default' => option('bnomei.monolog.default'),
             ], option('bnomei.monolog.channels', [])),
+            'channels.extends' => option('bnomei.monolog.channels.extends'),
         ];
         $this->options = array_merge($defaults, $options);
+
+        foreach ($this->options['channels.extends'] as $extend) {
+            // NOTE: it is intended that channel override merged not other way around
+            $this->options['channels'] = array_merge(option($extend, []), $this->options['channels']);
+        }
 
         foreach ($this->options['channels'] as $key => $value) {
             $this->channels[$key] = is_callable($value) ? $value() : $value;
@@ -35,23 +42,23 @@ final class Log
     }
 
     /**
-     * @return \Monolog\Logger
+     * @return Logger
      */
-    public function channel(string $name = 'default'): ?\Monolog\Logger
+    public function channel(string $name = 'default'): ?Logger
     {
         return A::get($this->channels, $name);
     }
 
-    /** @var \Bnomei\Log */
+    /** @var Log */
     private static $singleton;
 
     /**
      * @param array $options
-     * @return \Bnomei\Log
+     * @return Log
      */
     public static function singleton(array $options = [])
     {
-        if (! self::$singleton) {
+        if (!self::$singleton) {
             self::$singleton = new self($options);
         }
 

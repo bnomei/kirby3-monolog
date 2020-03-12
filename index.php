@@ -8,6 +8,9 @@ Kirby::plugin('bnomei/monolog', [
             // 'default => function() { return null; }, // disable default
             // 'example' => function() { return new \Monolog\Logger('example'); },
         ],
+        'channels.extends' => [
+            // 'myplugin.name.channels', // load arrays of channels from other options
+        ],
         'file' => function() {
             $dirs = [
                 // https://github.com/getkirby/ideas/issues/493
