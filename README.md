@@ -23,6 +23,17 @@ monolog()->info('test-' . md5((string) time()), [
 **site/logs/2019-10-27.log**
 > [2019-10-27 19:10:30] default.INFO: test-d4a22afc0f735f551748d17c959b3339 {"title":"Home","page":"home"} []
 
+**Page-Method**
+This plugin also registers a Page-Method. It will use the [AutoID](https://github.com/bnomei/kirby3-autoid) if available or fallback to hash based on the `page->uid()`. 
+
+```php
+$page->monolog()->info('test-' . md5((string) time()), []);
+```
+
+**site/logs/{HASH}.log**
+> [2019-10-27 19:10:30] {HASH}.INFO: test-d4a22afc0f735f551748d17c959b3339 {} []
+
+
 ## Commercial Usage
 
 This plugin is free but if you use it in a commercial project please consider to 

@@ -37,8 +37,14 @@ final class Log
         }
 
         foreach ($this->options['channels'] as $key => $value) {
-            $this->channels[$key] = is_callable($value) ? $value() : $value;
+            $this->setChannel($key, $value);
         }
+    }
+
+    public function setChannel(string $name, $value): ?Logger
+    {
+        $this->channels[$name] = is_callable($value) ? $value() : $value;
+        return $this->channels[$name];
     }
 
     /**

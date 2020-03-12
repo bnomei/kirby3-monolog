@@ -37,4 +37,17 @@ final class LogTest extends TestCase
         $this->assertInstanceOf(\Monolog\Logger::class, $log->channel());
         $this->assertInstanceOf(\Monolog\Logger::class, $log->channel('default'));
     }
+
+    public function testPageChannel()
+    {
+        $page = page('home');
+        $channel = $page->monolog();
+
+        $this->assertInstanceOf(\Monolog\Logger::class, $channel);
+
+        $logfile = __DIR__ . '/site/logs/vl2sb4.log';
+        @unlink($logfile);
+        $channel->info('test');
+        $this->assertFileExists($logfile);
+    }
 }

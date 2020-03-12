@@ -11,15 +11,15 @@ Kirby::plugin('bnomei/monolog', [
         'channels.extends' => [
             // 'myplugin.name.channels', // load arrays of channels from other options
         ],
-        'file' => function() {
+        'dir' => function() {
             $dirs = [
                 // https://github.com/getkirby/ideas/issues/493
                 // zero-downtime deployments, try any of these
-                realpath(kirby()->roots()->accounts() . '/../') . DIRECTORY_SEPARATOR . 'logs',
-                realpath(kirby()->roots()->cache() . '/../') . DIRECTORY_SEPARATOR . 'logs',
-                realpath(kirby()->roots()->sessions() . '/../') . DIRECTORY_SEPARATOR . 'logs',
+                realpath(kirby()->roots()->accounts() . '/../') . '/logs',
+                realpath(kirby()->roots()->cache() . '/../') . '/logs',
+                realpath(kirby()->roots()->sessions() . '/../') . '/logs',
                 // kirby default
-                kirby()->roots()->site() . DIRECTORY_SEPARATOR . 'logs',
+                kirby()->roots()->site() . '/logs',
             ];
             $dir = $dirs[0];
             foreach ($dirs as $existsDir) {
@@ -27,11 +27,21 @@ Kirby::plugin('bnomei/monolog', [
                     $dir = $existsDir;
                 }
             }
-
-            return $dir . DIRECTORY_SEPARATOR . date('Y-m-d') . '.log';
+            return $dir;
         },
-        'default' => function () {
-            $file = option('bnomei.monolog.file');
+        'hash' => function(\Kirby\Cms\Page $page) {
+            $hash = $page->autoid();
+            if (! $hash || $hash->isEmpty()) {
+                // k2 hash
+                $hash = base_convert(sprintf('%u', crc32($page->uri())), 10, 36);
+            }
+            return $hash;
+        },
+        'file' => function() {
+            return option('bnomei.monolog.dir')() . '/' . date('Y-m-d') . '.log';
+        },
+        'default' => function (string $channel = 'default', string $file = null) {
+            $file = $file ?? option('bnomei.monolog.file');
             if ($file && is_callable($file)) {
                 $file = $file();
             }
@@ -47,19 +57,31 @@ Kirby::plugin('bnomei/monolog', [
                 new \Bnomei\KirbyFormatter()
             );
 
-            $logger = new \Monolog\Logger('default');
+            $logger = new \Monolog\Logger($channel);
             $logger->pushHandler($stream);
 
             return $logger;
         },
     ],
+    'pageMethods' => [
+        'monolog' => function () {
+            $hash = option('bnomei.monolog.hash')($this);
+            $monolog = \Bnomei\Log::singleton();
+            $channel = $monolog->channel($hash);
+            if (! $channel) {
+                $file = option('bnomei.monolog.dir')() . '/' . $hash . '.log';
+                $channel = $monolog->setChannel($hash, option('bnomei.monolog.default')($hash, $file));
+            }
+            return $channel;
+        },
+    ],
 ]);
 
-if (!class_exists('Bnomei\Log')) {
+if (! class_exists('Bnomei\Log')) {
     require_once __DIR__ . '/classes/Log.php';
 }
 
-if (!function_exists('monolog')) {
+if (! function_exists('monolog')) {
     function monolog(string $channel = 'default')
     {
         return \Bnomei\Log::singleton()->channel($channel);
