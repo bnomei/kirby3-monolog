@@ -134,12 +134,6 @@ return [
 ];
 ```
 
-```php
-monolog('security')->info('User requested password reset', [
-    'User' => kirby()->user()->name(),
-]);
-```
-
 ## Dependencies
 
 - [Seldaek/monolog](https://github.com/Seldaek/monolog)
