@@ -27,11 +27,11 @@ final class Log
             'channels' => array_merge([
                 'default' => option('bnomei.monolog.default'),
             ], option('bnomei.monolog.channels', [])),
-            'channels.extends' => option('bnomei.monolog.channels.extends'),
+            'channels-extends' => option('bnomei.monolog.channels-extends'),
         ];
         $this->options = array_merge($defaults, $options);
 
-        foreach ($this->options['channels.extends'] as $extend) {
+        foreach ($this->options['channels-extends'] as $extend) {
             // NOTE: it is intended that channel override merged not other way around
             $this->options['channels'] = array_merge(option($extend, []), $this->options['channels']);
         }
