@@ -42,7 +42,7 @@ Kirby::plugin('bnomei/monolog', [
         },
         'default' => function (string $channel = 'default', string $file = null) {
             $file = $file ?? option('bnomei.monolog.file');
-            if ($file && is_callable($file)) {
+            if ($file && !is_string($file) && is_callable($file)) {
                 $file = $file();
             }
             $stream = new \Monolog\Handler\StreamHandler(
@@ -68,9 +68,15 @@ Kirby::plugin('bnomei/monolog', [
             $hash = option('bnomei.monolog.hash')($this);
             $monolog = \Bnomei\Log::singleton();
             $channel = $monolog->channel($hash);
+
+            // load inline
             if (! $channel) {
                 $file = option('bnomei.monolog.dir')() . '/' . $hash . '.log';
-                $channel = $monolog->setChannel($hash, option('bnomei.monolog.default')($hash, $file));
+                $monolog->setChannel(
+                    $hash,
+                    option('bnomei.monolog.default')($hash, $file)
+                );
+                $channel = $monolog->channel($hash);
             }
             return $channel;
         },

@@ -49,5 +49,31 @@ final class LogTest extends TestCase
         @unlink($logfile);
         $channel->info('test');
         $this->assertFileExists($logfile);
+
+        $this->assertTrue(
+            $channel->error('a')
+        );
+        $this->assertTrue(
+            $channel->info('b')
+        );
+    }
+
+    public function testDefaultChannel()
+    {
+        $this->assertTrue(
+            monolog()->info('hello')
+        );
+    }
+
+    public function testOtherChannel()
+    {
+        $channel = monolog('other');
+
+        $this->assertTrue(
+            $channel->info('world')
+        );
+
+        $logfile = __DIR__ . '/site/logs/other-'.date('Ymdhm').'.log';
+        $this->assertFileExists($logfile);
     }
 }
