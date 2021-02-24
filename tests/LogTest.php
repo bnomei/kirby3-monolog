@@ -50,17 +50,17 @@ final class LogTest extends TestCase
         $channel->info('test');
         $this->assertFileExists($logfile);
 
-        $this->assertTrue(
+        $this->assertNull(
             $channel->error('a')
         );
-        $this->assertTrue(
+        $this->assertNull(
             $channel->info('b')
         );
     }
 
     public function testDefaultChannel()
     {
-        $this->assertTrue(
+        $this->assertNull(
             monolog()->info('hello')
         );
     }
@@ -69,7 +69,7 @@ final class LogTest extends TestCase
     {
         $channel = monolog('other');
 
-        $this->assertTrue(
+        $this->assertNull(
             $channel->info('world')
         );
 
