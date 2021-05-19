@@ -11,15 +11,16 @@ Kirby::plugin('bnomei/monolog', [
         'channels-extends' => [
             // 'myplugin.name.channels', // load arrays of channels from other options
         ],
-        'dir' => function() {
+        'dir' => function () {
             $dirs = [
                 // https://github.com/getkirby/ideas/issues/493
                 // zero-downtime deployments, try any of these
                 realpath(kirby()->roots()->accounts() . '/../') . '/logs',
                 realpath(kirby()->roots()->cache() . '/../') . '/logs',
                 realpath(kirby()->roots()->sessions() . '/../') . '/logs',
-                // kirby default
                 kirby()->roots()->site() . '/logs',
+                // kirby default
+                kirby()->roots()->logs(),
             ];
             $dir = $dirs[0];
             foreach ($dirs as $existsDir) {
@@ -29,7 +30,7 @@ Kirby::plugin('bnomei/monolog', [
             }
             return $dir;
         },
-        'hash' => function(\Kirby\Cms\Page $page) {
+        'hash' => function (\Kirby\Cms\Page $page) {
             $hash = $page->autoid();
             if (! $hash || $hash->isEmpty()) {
                 // k2 hash
@@ -37,7 +38,7 @@ Kirby::plugin('bnomei/monolog', [
             }
             return $hash;
         },
-        'file' => function() {
+        'file' => function () {
             return option('bnomei.monolog.dir')() . '/' . date('Y-m-d') . '.log';
         },
         'default' => function (string $channel = 'default', string $file = null) {
