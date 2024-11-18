@@ -4,7 +4,7 @@ namespace Bnomei;
 
 final class KirbyFormatter extends \Monolog\Formatter\LineFormatter
 {
-    protected function normalize($data, $depth = 0)
+    protected function normalize($data, $depth = 0): mixed
     {
         if ($data && is_a($data, \Kirby\Cms\Field::class)) {
             return $data->value();
