@@ -139,7 +139,7 @@ return [
 
 ## Dependencies
 
-- [monolog/monolog](https://github.com/monolog/monolog)
+- [seldaek/monolog](https://github.com/seldaek/monolog)
 
 ## Disclaimer
 
