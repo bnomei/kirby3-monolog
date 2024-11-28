@@ -8,7 +8,7 @@ use Closure;
 use Kirby\Toolkit\A;
 use Monolog\Logger;
 
-final class Log
+class Log
 {
     private array $channels;
 
