@@ -21,8 +21,6 @@ final class Log
             $this->channels[$key] = $value;
         }
 
-        ray($this->channels)->blue();
-
         // load channels from other plugin options
         foreach ((array) option('bnomei.monolog.channels-extends', []) as $extend) {
             if (! is_string($extend)) {
@@ -65,7 +63,6 @@ final class Log
     {
         if (self::$singleton === null) {
             self::$singleton = new self;
-            ray('singleton', self::$singleton);
         }
 
         return self::$singleton;
