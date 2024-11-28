@@ -33,15 +33,15 @@ monolog()->info('test-' . md5((string) time()), [
 ```
 
 **Page-Method**
-This plugin also registers a Page-Method. You can use it like this:
+This plugin also registers a Page-Method which will use the UUID of the page as a `channel`. You can use it like this:
 
 ```php
 $page->monolog()->info('test-' . md5((string) time()), [/*...*/]);
 ```
 
-**site/logs/{HASH}.log**
+**site/logs/2024-10-27.log**
 ```log
-[2024-10-27 19:10:30] {HASH}.INFO: test-d4a22afc0f735f551748d17c959b3339 {} []
+[2024-10-27 19:10:30] {UUID_of_page}.INFO: test-d4a22afc0f735f551748d17c959b3339 {} []
 ```
 
 ## Setup
