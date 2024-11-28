@@ -37,6 +37,7 @@ Kirby::plugin('bnomei/monolog', [
             return $dir;
         },
         'filename' => function (?string $channel = null): string {
+            /* @phpstan-ignore-next-line */
             return implode('-', array_filter([
                 // $channel !== 'default' ? $channel : null,
                 date('Y-m-d'),
