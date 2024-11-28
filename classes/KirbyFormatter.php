@@ -2,12 +2,15 @@
 
 namespace Bnomei;
 
-final class KirbyFormatter extends \Monolog\Formatter\LineFormatter
+use Kirby\Content\Field;
+use Monolog\Formatter\LineFormatter;
+
+class KirbyFormatter extends LineFormatter
 {
-    protected function normalize($data, $depth = 0): mixed
+    protected function normalize(mixed $data, int $depth = 0): mixed
     {
-        if ($data && is_a($data, \Kirby\Cms\Field::class)) {
-            return $data->value();
+        if ($data instanceof Field) {
+            return $data->value(); // @phpstan-ignore-line
         }
 
         return parent::normalize($data, $depth);

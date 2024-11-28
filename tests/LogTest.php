@@ -1,79 +1,82 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Bnomei\Log;
-use PHPUnit\Framework\TestCase;
+use Monolog\Logger;
 
-final class LogTest extends TestCase
-{
-    public function testMonologLibExists()
-    {
-        $this->assertIsString(\Monolog\Logger::class);
-    }
+test('monolog lib exists', function () {
+    expect(Logger::class)->toBeString();
+});
 
-    public function testConstruct()
-    {
-        $log = new Log();
+test('construct', function () {
+    $log = new Log;
 
-        $this->assertInstanceOf(Log::class, $log);
-    }
+    expect($log)->toBeInstanceOf(Log::class);
+});
 
-    public function testSingleton()
-    {
-        // static instance does not exists
-        $log = Bnomei\Log::singleton();
-        $this->assertInstanceOf(Log::class, $log);
+test('singleton', function () {
+    // static instance does not exists
+    $log = Bnomei\Log::singleton();
+    expect($log)->toBeInstanceOf(Log::class);
 
-        // static instance now does exist
-        $log = Bnomei\Log::singleton();
-        $this->assertInstanceOf(Log::class, $log);
-    }
+    // static instance now does exist
+    $log = Bnomei\Log::singleton();
+    expect($log)->toBeInstanceOf(Log::class);
+});
 
-    public function testChannel()
-    {
-        $log = new Log();
+test('channel', function () {
+    $log = new Log;
 
-        $this->assertInstanceOf(\Monolog\Logger::class, $log->channel());
-        $this->assertInstanceOf(\Monolog\Logger::class, $log->channel('default'));
-    }
+    expect($log->channel())->toBeInstanceOf(Logger::class)
+        ->and($log->channel('default'))->toBeInstanceOf(Logger::class);
+});
 
-    public function testPageChannel()
-    {
-        $page = page('home');
-        $channel = $page->monolog();
+test('page channel', function () {
+    $page = page('home');
+    $channel = $page->monolog();
 
-        $this->assertInstanceOf(\Monolog\Logger::class, $channel);
+    expect($channel)->toBeInstanceOf(Logger::class);
 
-        $logfile = __DIR__ . '/site/logs/vl2sb4.log';
-        @unlink($logfile);
-        $channel->info('test');
-        $this->assertFileExists($logfile);
+    $dir = option('bnomei.monolog.dir')(); // @phpstan-ignore-line
+    $filename = option('bnomei.monolog.filename')(
+        $page->monologChannel()
+    ); // @phpstan-ignore-line
+    $logfile = $dir.'/'.$filename;
 
-        $this->assertNull(
-            $channel->error('a')
-        );
-        $this->assertNull(
-            $channel->info('b')
-        );
-    }
+    // make sure its gone
+    @unlink($logfile);
 
-    public function testDefaultChannel()
-    {
-        $this->assertNull(
-            monolog()->info('hello')
-        );
-    }
+    // this will create the file
+    $channel->info('test', [
+        'title' => $page->title(),
+        'page' => $page->id(),
+    ]);
 
-    public function testOtherChannel()
-    {
-        $channel = monolog('other');
+    expect($logfile)->toBeFile()
+        // write more to the file
+        ->and($channel->error('a'))->toBeNull()
+        ->and($channel->info('b'))->toBeNull();
+});
 
-        $this->assertNull(
-            $channel->info('world')
-        );
+test('default channel', function () {
+    expect(monolog()->info('hello'))->toBeNull();
+});
 
-        $logfile = __DIR__ . '/site/logs/other-'.date('Ymdhm').'.log';
-        $this->assertFileExists($logfile);
-    }
-}
+test('custom channel', function () {
+    $channel = monolog('swatch');
+
+    expect($channel->info('world'))->toBeNull();
+
+    $logfile = __DIR__.'/site/logs/swatch-'.date('B').'.log';
+    expect($logfile)->toBeFile();
+});
+
+test('dynamic channel', function () {
+    $channel = monolog('dynamic');
+
+    expect($channel->info('hello'))->toBeNull();
+
+    $logfile = __DIR__.'/site/logs/'.date('Y-m-d').'.log';
+    expect($logfile)->toBeFile();
+});
