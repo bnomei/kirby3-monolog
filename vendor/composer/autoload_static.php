@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4
+class ComposerStaticInit3e3f287b3b04ec7f7251e32a552c58db
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
@@ -148,6 +148,7 @@ class ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4
         'Monolog\\Handler\\WebRequestRecognizerTrait' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/WebRequestRecognizerTrait.php',
         'Monolog\\Handler\\WhatFailureGroupHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/WhatFailureGroupHandler.php',
         'Monolog\\Handler\\ZendMonitorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Handler/ZendMonitorHandler.php',
+        'Monolog\\JsonSerializableDateTimeImmutable' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/JsonSerializableDateTimeImmutable.php',
         'Monolog\\Level' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Level.php',
         'Monolog\\LogRecord' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/LogRecord.php',
         'Monolog\\Logger' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Logger.php',
@@ -169,6 +170,7 @@ class ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
         'Monolog\\ResettableInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ResettableInterface.php',
         'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
+        'Monolog\\Test\\MonologTestCase' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Test/MonologTestCase.php',
         'Monolog\\Test\\TestCase' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Test/TestCase.php',
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
         'Psr\\Log\\AbstractLogger' => __DIR__ . '/..' . '/psr/log/src/AbstractLogger.php',
@@ -184,9 +186,9 @@ class ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8aa4fcb304d64fd0b2133a169832c9d4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3e3f287b3b04ec7f7251e32a552c58db::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3e3f287b3b04ec7f7251e32a552c58db::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3e3f287b3b04ec7f7251e32a552c58db::$classMap;
 
         }, null, ClassLoader::class);
     }

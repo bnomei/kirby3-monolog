@@ -64,7 +64,7 @@ Kirby::plugin('bnomei/monolog', [
         },
         'monologChannel' => function (): string {
             // uuid or k2 hash
-            /* @var Page $this*/
+            /* @var Page $this */
             return $this->uuid()?->id() ?? base_convert(sprintf('%u', crc32($this->uri())), 10, 36);
         },
     ],
