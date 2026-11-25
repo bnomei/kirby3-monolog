@@ -17,11 +17,11 @@ test('construct', function () {
 
 test('singleton', function () {
     // static instance does not exists
-    $log = Bnomei\Log::singleton();
+    $log = Log::singleton();
     expect($log)->toBeInstanceOf(Log::class);
 
     // static instance now does exist
-    $log = Bnomei\Log::singleton();
+    $log = Log::singleton();
     expect($log)->toBeInstanceOf(Log::class);
 });
 

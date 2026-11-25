@@ -2,7 +2,7 @@
   "name": "bnomei/kirby3-monolog",
   "description": "Use Monolog to log data to files/databases/notifications/...",
   "type": "kirby-plugin",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "license": "MIT",
   "authors": [
     {
@@ -68,7 +68,10 @@
     ]
   },
   "extra": {
-    "kirby-cms-path": "tests/kirby"
+    "kirby-cms-path": "tests/kirby",
+    "kirby": {
+      "compatible": "^5.0 || ^6.0"
+    }
   },
   "suggest": {
   }
